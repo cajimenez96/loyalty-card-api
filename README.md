@@ -1,98 +1,217 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Loyalty Card API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Sistema de puntos y premios por compra desarrollado con NestJS, MongoDB y autenticación JWT.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 📋 Descripción
 
-## Description
+API REST escalable para gestionar un sistema de loyalty card que permite:
+- Registro de clientes y acumulación de puntos por compra
+- Gestión de campañas con productos y premios asociados
+- Generación de códigos QR para validación de ventas
+- Detección automática de ganadores y generación de códigos de premio
+- Sistema de roles (Cajero, Admin, Marketing)
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 🏗️ Arquitectura
 
-## Project setup
-
-```bash
-$ yarn install
+```
+src/
+├── auth/              # Autenticación JWT y gestión de usuarios
+├── clients/           # Gestión de clientes y puntos
+├── products/          # Catálogo de productos
+├── campaigns/         # Campañas con productos y premios
+├── sales/             # Registro de ventas, QR y ganadores
+├── common/            # Decorators, guards, filters, interceptors
+└── database/          # Seeders y configuración
 ```
 
-## Compile and run the project
+## 🚀 Instalación
 
+### Prerequisitos
+
+- Node.js 18+
+- MongoDB 6.0+ (local o MongoDB Atlas)
+- Yarn o npm
+
+### Pasos
+
+1. **Clonar el repositorio**
 ```bash
-# development
-$ yarn run start
-
-# watch mode
-$ yarn run start:dev
-
-# production mode
-$ yarn run start:prod
+git clone <repository-url>
+cd loyalty-card-api
 ```
 
-## Run tests
-
+2. **Instalar dependencias**
 ```bash
-# unit tests
-$ yarn run test
-
-# e2e tests
-$ yarn run test:e2e
-
-# test coverage
-$ yarn run test:cov
+yarn install
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
+3. **Configurar variables de entorno**
 ```bash
-$ yarn install -g @nestjs/mau
-$ mau deploy
+cp .env.example .env
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+Editar `.env` con tus configuraciones:
+```env
+# MongoDB
+MONGODB_URI=mongodb://localhost:27017/loyalty-card
 
-## Resources
+# JWT
+JWT_SECRET=tu-secret-super-seguro
+JWT_REFRESH_SECRET=tu-refresh-secret-super-seguro
 
-Check out a few resources that may come in handy when working with NestJS:
+# Frontend URL para CORS
+FRONTEND_URL=http://localhost:5173
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+# Winner Configuration
+WINNER_THRESHOLD_POINTS=100
+```
 
-## Support
+4. **Iniciar MongoDB** (si es local)
+```bash
+mongod --dbpath /path/to/data/db
+```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+5. **Ejecutar en desarrollo**
+```bash
+yarn start:dev
+```
 
-## Stay in touch
+La API estará disponible en `http://localhost:3000/api`
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## 📚 Documentación API
 
-## License
+### Swagger UI
+Acceder a la documentación interactiva en:
+```
+http://localhost:3000/api/docs
+```
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+### Endpoints Principales
+
+#### Autenticación
+- `POST /api/auth/login` - Login con PIN
+- `POST /api/auth/refresh` - Renovar token
+- `GET /api/auth/me` - Usuario actual
+
+#### Clientes
+- `GET /api/clients` - Listar clientes (paginado)
+- `GET /api/clients/dni/:dni` - Buscar por DNI
+- `POST /api/clients` - Crear cliente
+- `GET /api/clients/:id/puntos` - Obtener puntos del cliente
+
+#### Productos  
+- `GET /api/products` - Listar productos
+- `POST /api/products` - Crear producto (Admin)
+- `GET /api/products/codigo/:codigo` - Buscar por código
+
+#### Campañas
+- `GET /api/campaigns` - Listar campañas
+- `GET /api/campaigns/active` - Campaña activa
+- `POST /api/campaigns` - Crear campaña (Admin/Marketing)
+- `POST /api/campaigns/:id/productos` - Agregar producto
+- `POST /api/campaigns/:id/premios` - Agregar premio
+
+#### Ventas
+- `POST /api/sales` - Registrar venta (genera QR y detecta ganadores)
+- `GET /api/sales/qr?token=XXX` - Ver datos de venta (público)
+
+#### Ganadores
+- `GET /api/winners` - Listar ganadores
+- `POST /api/winners/claim` - Canjear premio con código
+
+## 🔐 Autenticación
+
+El sistema usa JWT con roles:
+- **Cajero**: Registrar ventas, buscar clientes
+- **Admin**: Todas las operaciones
+- **Marketing**: Campañas, notificaciones, reportes
+
+### Usuarios por defecto (desarrollo)
+- Admin: PIN `1234`
+- Cajero: PIN `5678`
+- Marketing: PIN `9012`
+
+## 🧪 Testing
+
+```bash
+# Unit tests
+yarn test
+
+# E2E tests
+yarn test:e2e
+
+# Coverage
+yarn test:cov
+```
+
+## 📦 Build para Producción
+
+```bash
+yarn build
+yarn start:prod
+```
+
+## 🛠️ Scripts Disponibles
+
+```bash
+yarn start:dev      # Desarrollo con hot reload
+yarn start:debug    # Desarrollo con debugger
+yarn build          # Compilar para producción
+yarn start:prod     # Ejecutar build de producción
+yarn lint           # Linter
+yarn format         # Prettier
+```
+
+## 📊 Flujo de Negocio
+
+### Registro de Venta
+1. Cajero escanea DNI del cliente
+2. Escanea código de producto
+3. Sistema valida campaña activa
+4. Acumula puntos al cliente
+5. Genera código QR único
+6. Detecta si el cliente alcanzó umbral de ganador
+7. Si es ganador: genera código de 5 caracteres y notifica
+
+### Canje de Premio
+1. Cliente presenta código ganador
+2. Cajero ingresa código en sistema
+3. Sistema valida y marca como canjeado
+4. Entrega premio físico
+
+## 🔧 Tecnologías
+
+- **NestJS 11** - Framework backend
+- **MongoDB + Mongoose** - Base de datos
+- **JWT** - Autenticación
+- **Swagger** - Documentación API
+- **class-validator** - Validación de DTOs
+- **bcrypt** - Hash de PINs
+- **nanoid** - Generación de tokens únicos
+
+## 📝 Notas de Desarrollo
+
+### Índices MongoDB
+El sistema crea automáticamente índices para optimizar queries:
+- `clients.dni` (único)
+- `sales.qrToken` (único)
+- `winners.codigoGanador` (único)
+- `campaigns.fechaInicio`, `campaigns.fechaFin`
+
+### Estado de Campañas
+El estado se calcula dinámicamente:
+- **activa**: `fechaInicio <= hoy <= fechaFin`
+- **vencida**: `hoy > fechaFin`
+- **próxima**: `hoy < fechaInicio`
+
+## 🤝 Contribuir
+
+1. Fork el proyecto
+2. Crear feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit cambios (`git commit -m 'Add AmazingFeature'`)
+4. Push al branch (`git push origin feature/AmazingFeature`)
+5. Abrir Pull Request
+
+## 📄 Licencia
+
+UNLICENSED - Uso privado

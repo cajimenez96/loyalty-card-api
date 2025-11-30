@@ -16,10 +16,38 @@
     "baseUrl": "./",
     "incremental": true,
     "skipLibCheck": true,
-    "strictNullChecks": true,
+    "strict": true,
+    "strictPropertyInitialization": false,
     "forceConsistentCasingInFileNames": true,
-    "noImplicitAny": false,
-    "strictBindCallApply": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": true,
+    "paths": {
+      "@/*": [
+        "src/*"
+      ],
+      "@common/*": [
+        "src/common/*"
+      ],
+      "@auth/*": [
+        "src/auth/*"
+      ],
+      "@clients/*": [
+        "src/clients/*"
+      ],
+      "@campaigns/*": [
+        "src/campaigns/*"
+      ],
+      "@sales/*": [
+        "src/sales/*"
+      ],
+      "@products/*": [
+        "src/products/*"
+      ],
+      "@notifications/*": [
+        "src/notifications/*"
+      ],
+      "@metrics/*": [
+        "src/metrics/*"
+      ]
+    }
   }
 }
